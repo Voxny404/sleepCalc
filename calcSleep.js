@@ -2,6 +2,7 @@ let wakeUpMin = document.getElementById('timesMin');
 let wakeUpHours= document.getElementById('timesH');
 let wakeUpDayNight = document.getElementById('timesDay');
 let offSetTime = document.getElementById('offSet');
+let offSetAddorDivide = document.getElementById('offSetAddorDivide');
 
 let calculateButton = document.getElementById('calculateButton');
 let resultDisplayText = document.getElementById('resultDisplayText');
@@ -32,13 +33,14 @@ function calc () {
     const awakingDate = new Date(currentDate.getFullYear(),currentDate.getMonth(),currentDate.getDate() - prefixDay, parseInt(wakeUpHours.value), parseInt(wakeUpMin.value));
     const timeAwake = currentDate.getTime() - awakingDate.getTime()
     const timeLeft = avarageAwakeTime - timeAwake
+    const valueOffSet = parseInt(offSetTime.value)
 
     const bedTime =  new Date(awakingDate.getTime() + avarageAwakeTime + 1200000);
-    const arrayOfDays = getDays(currentDate, prefixDay, millisToMinutesAndSeconds, awakingDate, avarageAwakeTime, parseInt(offSetTime.value));
+    const arrayOfDays = getDays(currentDate, prefixDay, millisToMinutesAndSeconds, awakingDate, avarageAwakeTime, valueOffSet);
 
     createHistogram(arrayOfDays)
 
-    resultDisplayText.innerText = `You are awake for ${millisToMinutesAndSeconds(timeAwake)} hours`
+    resultDisplayText.innerText = `You've been awake for ${millisToMinutesAndSeconds(timeAwake)} hours`
     resultDisplayText2.innerText = `${timeLeft < 0 ? 'Get some sleep!' : 'Available time ' +millisToMinutesAndSeconds(timeLeft) + ' hours'}`
     resultDisplayText3.innerText = `Bedtime : ${bedTime}`
 }
@@ -46,9 +48,12 @@ function calc () {
 function getDays (currentDate, prefixDay, millisToMinutesAndSeconds, awakingDate, avarageAwakeTime, offSet) {
     let arrayOfDates = [];
     let dateOffset = offSet;
-
+    
     for (let i=0; i <= 14; i++) {
-        let newDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() - prefixDay + i, awakingDate.getHours() + millisToMinutesAndSeconds(avarageAwakeTime, 'h'), awakingDate.getMinutes() + millisToMinutesAndSeconds(avarageAwakeTime, 'm') + dateOffset)
+        let newDay = null;
+        if (offSetAddorDivide.value === '-') newDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() - prefixDay + i, awakingDate.getHours() + millisToMinutesAndSeconds(avarageAwakeTime, 'h'), awakingDate.getMinutes() + millisToMinutesAndSeconds(avarageAwakeTime, 'm') - dateOffset)
+        if (offSetAddorDivide.value === '+') newDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() - prefixDay + i, awakingDate.getHours() + millisToMinutesAndSeconds(avarageAwakeTime, 'h'), awakingDate.getMinutes() + millisToMinutesAndSeconds(avarageAwakeTime, 'm') + dateOffset)
+        
         arrayOfDates.push(newDay)
         dateOffset += offSet
     }
