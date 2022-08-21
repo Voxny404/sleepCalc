@@ -18,3 +18,15 @@ button {
     border: 5px solid #a557c9; /* Green */
     background-color: #a557c9;
 }
+
+@media only screen and (max-width: 768px) { 
+    .chartBox {
+        width: 20em;
+    }
+}
+
+@media only screen and (max-width: 320px){ 
+    .chartBox {
+        width: 15em;
+    }
+}

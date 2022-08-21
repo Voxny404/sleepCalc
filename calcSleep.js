@@ -40,7 +40,7 @@ function calc () {
 
     resultDisplayText.innerText = `You are awake for ${millisToMinutesAndSeconds(timeAwake)} hours`
     resultDisplayText2.innerText = `${timeLeft < 0 ? 'Get some sleep!' : 'Available time ' +millisToMinutesAndSeconds(timeLeft) + ' hours'}`
-    resultDisplayText3.innerText = `Bedtime : ${bedTime.toUTCString()}`
+    resultDisplayText3.innerText = `Bedtime : ${bedTime}`
 }
 
 function getDays (currentDate, prefixDay, millisToMinutesAndSeconds, awakingDate, avarageAwakeTime, offSet) {
