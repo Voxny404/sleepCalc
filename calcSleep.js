@@ -8,6 +8,7 @@ let resultDisplayText = document.getElementById('resultDisplayText');
 let resultDisplayText2 = document.getElementById('resultDisplayText2');
 let resultDisplayText3 = document.getElementById('resultDisplayText3');
 let graph = null;
+
 calculateButton.onclick = () => calc();
 
 function millisToMinutesAndSeconds(millis, only) {
@@ -25,7 +26,9 @@ function calc () {
     const currentDate = new Date()
     const avarageAwakeTime = 61200000;
     let prefixDay = 0;
+    
     if (wakeUpDayNight.value === 'yesterday') prefixDay += 1
+
     const awakingDate = new Date(currentDate.getFullYear(),currentDate.getMonth(),currentDate.getDate() - prefixDay, parseInt(wakeUpHours.value), parseInt(wakeUpMin.value));
     const timeAwake = currentDate.getTime() - awakingDate.getTime()
     const timeLeft = avarageAwakeTime - timeAwake
@@ -34,6 +37,7 @@ function calc () {
     const arrayOfDays = getDays(currentDate, prefixDay, millisToMinutesAndSeconds, awakingDate, avarageAwakeTime, parseInt(offSetTime.value));
 
     createHistogram(arrayOfDays)
+
     resultDisplayText.innerText = `You are awake for ${millisToMinutesAndSeconds(timeAwake)} hours`
     resultDisplayText2.innerText = `${timeLeft < 0 ? 'Get some sleep!' : 'Available time ' +millisToMinutesAndSeconds(timeLeft) + ' hours'}`
     resultDisplayText3.innerText = `Bedtime : ${bedTime.toUTCString()}`
@@ -42,6 +46,7 @@ function calc () {
 function getDays (currentDate, prefixDay, millisToMinutesAndSeconds, awakingDate, avarageAwakeTime, offSet) {
     let arrayOfDates = [];
     let dateOffset = offSet;
+
     for (let i=0; i <= 14; i++) {
         let newDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() - prefixDay + i, awakingDate.getHours() + millisToMinutesAndSeconds(avarageAwakeTime, 'h'), awakingDate.getMinutes() + millisToMinutesAndSeconds(avarageAwakeTime, 'm') + dateOffset)
         arrayOfDates.push(newDay)
@@ -54,6 +59,7 @@ function getDays (currentDate, prefixDay, millisToMinutesAndSeconds, awakingDate
 function createHistogram(arr) {
     const canvas = document.getElementById('myChart');
     const ctx = canvas.getContext('2d');
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     let lables = []
@@ -70,7 +76,6 @@ function createHistogram(arr) {
         if (day === 6) lables.push('Sunday ' + arr[i].getDate())
 
         hours.push(arr[i].getHours())
-
     }
 
     if (graph) graph.destroy();
