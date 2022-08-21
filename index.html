@@ -1,0 +1,60 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style type="text/css">
+            .chartBox {
+                width: 25em;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .container {
+                text-align: center;
+            }
+            .containerHead{
+                background-color: rgb(153, 144, 144);
+                padding: 2em;
+                border-radius: 20px;
+            }
+            button {
+                background-color: white;
+                color: white;
+                border-radius: 5px;
+                border: 5px solid #a557c9; /* Green */
+                background-color: #a557c9;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+           <div class="containerHead">
+                <label for="timesH">You woke up at :</label>
+                <select name="timeH" id="timesH"></select>
+                <select name="timeMin" id="timesMin"></select>
+                <select name="timeDay" id="timesDay">
+                    <option value="today">today</option>
+                    <option value="yesterday">yesterday</option>
+                </select>
+                <br/>
+                <br/>
+                <label for="offSet">OffSet :</label>
+                <select name="offSet" id="offSet"></select>
+                <label for="offSet">min</label>
+                <br/>
+                <br/>
+                <button id="calculateButton">Calculate</button>
+           </div>
+            <br/>
+            <h3 id="resultDisplayText"></h3>
+            <h3 id="resultDisplayText2"></h3>
+            <h2 id="resultDisplayText3"></h2>
+        </div>
+        <br/>
+        <div class="chartBox">
+            <canvas id="myChart" width="400" height="400"></canvas>
+        </div>
+    </body>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="chart.js"></script>
+    <script src="createSelection.js"></script>
+    <script src="calcSleep.js"></script>
+</html>
